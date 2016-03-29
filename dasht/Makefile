@@ -2,7 +2,7 @@ GH_USERNAME = sunaku
 include ../_lib/github-release.mk
 
 deb : release meta-version meta-license meta-url meta-description meta-vendor
-	fpm -s dir -t deb -n dasht \
+	@fpm -s dir -t deb -n dasht \
 		--log error \
 		--category doc \
 		--version "$$(cat meta-version)" \

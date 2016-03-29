@@ -3,7 +3,7 @@ GH_USERNAME = shyiko
 include ../_lib/github-release.mk
 
 deb : release meta-version meta-license meta-url meta-description meta-vendor
-	fpm -s dir -t deb -n $(NAME) \
+	@fpm -s dir -t deb -n $(NAME) \
 	    --log error \
 	    --category shells \
 	    --version "$$(cat meta-version)" \
