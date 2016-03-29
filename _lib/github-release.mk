@@ -1,3 +1,5 @@
+.DEFAULT_GOAL = deb
+
 NAME = $(notdir $(CURDIR))
 GH_API = https://api.github.com
 
