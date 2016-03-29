@@ -1,3 +1,5 @@
+.PHONY: deb clean
+
 NAME = $(notdir $(CURDIR))
 
 GEM_PREFIX != gem env gemdir

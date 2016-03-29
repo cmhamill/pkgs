@@ -1,4 +1,5 @@
 .DEFAULT_GOAL = deb
+.PHONY: deb clean
 
 NAME = $(notdir $(CURDIR))
 GH_API = https://api.github.com

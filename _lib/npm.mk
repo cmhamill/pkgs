@@ -1,3 +1,5 @@
+.PHONY: deb clean
+
 NAME = $(notdir $(CURDIR))
 
 LICENSE != npm view --json $(NAME) | jq .license
