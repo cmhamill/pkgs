@@ -25,5 +25,6 @@ deb : release-build meta-version meta-license meta-url meta-description meta-ven
 		--url "$$(cat meta-url)" \
 		--description "$$(cat meta-description)" \
 		--vendor  "$$(cat meta-vendor)" \
+		--depends ruby
 		-C $< usr
 	@echo $(NAME): done.
