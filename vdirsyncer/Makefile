@@ -1,1 +1,1 @@
-../_lib/python.mk
+../_lib/python3.mk
