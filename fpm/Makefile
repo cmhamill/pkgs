@@ -3,8 +3,8 @@ include ../_lib/github-tag.mk
 
 release-build : release meta-license
 	@mkdir -p $@/usr/lib/$(NAME) $@/usr/bin
-	@cd $< && bundle install --without=development --standalone
-	@cd $< && gem build $(NAME).gemspec
+	@cd $< && bundle install --without=development --standalone > /dev/null 2>&1
+	@cd $< && gem build $(NAME).gemspec > /dev/null 2>&1
 	@tar -xf $</fpm*gem -C $@
 	@tar --touch -xf $@/data.tar.gz -C $@/usr/lib/$(NAME)
 	@cp -pr $</bundle $@/usr/lib/$(NAME)/bundle
