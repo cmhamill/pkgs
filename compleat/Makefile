@@ -6,19 +6,20 @@ NAME = $(notdir $(CURDIR))
 SOURCE_URL = https://github.com/mbrubeck/compleat
 
 src :
-	git clone '$(SOURCE_URL)' $@
+	@git clone '$(SOURCE_URL)' $@
 
 configure : src
-	cd $< && ./Setup.lhs configure \
+	@cd $< && ./Setup.lhs configure \
 	    --prefix '$(CURDIR)/release/' \
 	    --docdir '$(CURDIR)/release/share/doc/$(NAME)/' \
 	    --datadir '$(CURDIR)/release/share/' --datasubdir '$(NAME)'
 
 release : configure
-	cd src && ./Setup.lhs build && ./Setup.lhs install
+	@cd src && ./Setup.lhs build && ./Setup.lhs install
 
 deb : release
-	fpm -s dir -t deb -n $(NAME) \
+	@echo $(NAME): building...
+	@fpm -s dir -t deb -n $(NAME) \
 	    --log error \
 	    --category shells \
 	    --version "$$(grep ^Version: src/compleat.cabal | awk '{ printf $$2 }')" \
@@ -29,6 +30,7 @@ deb : release
 	    --vendor "$$(grep ^Author: src/compleat.cabal | \
 	    			awk '{ $$1="";$$0=$$0; } NF=NF')" \
 	    ./release/=/usr
+	@echo $(NAME): done.
 
 clean :
 	@rm -rf -- ./$(NAME)*.deb ./release* ./src*
