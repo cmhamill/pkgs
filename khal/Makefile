@@ -1,6 +1,6 @@
 NAME = $(notdir $(CURDIR))
 
-PYTHON_INSTALL_LIB != python -c 'from distutils.sysconfig import get_python_lib; print get_python_lib()'
+PYTHON_INSTALL_LIB != python3 -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())'
 
 deb : clean
 	@echo $(NAME): building...
@@ -9,10 +9,10 @@ deb : clean
 	    --category python \
 	    --python-install-bin /usr/bin \
 	    --python-install-lib $(PYTHON_INSTALL_LIB) \
-	    --depends python-xdg --python-disable-dependency pyxdg \
-	    --depends python-tz --python-disable-dependency pytz \
+	    --depends python3-xdg --python-disable-dependency pyxdg \
+	    --depends python3-tz --python-disable-dependency pytz \
 	    --depends vdirsyncer --python-disable-dependency vdirsyncer \
-	    $(subst python-, , $(NAME))
+	    $(subst python3-, , $(NAME))
 	@echo $(NAME): done.
 
 clean :
