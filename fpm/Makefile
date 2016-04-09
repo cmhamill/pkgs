@@ -12,7 +12,7 @@ release-build : release meta-license
 	@echo 'load File.dirname($$0) + "/../lib/$(NAME)/bundle/bundler/setup.rb"' >> $@/usr/bin/$(NAME)
 	@echo 'require "$(NAME)"'  >> $@/usr/bin/$(NAME)
 	@echo 'require "$(NAME)/command"' >> $@/usr/bin/$(NAME)
-	@echo 'exit($(NAME)::Command.run || 0)' >> $@/usr/bin/$(NAME)
+	@echo 'exit(FPM::Command.run || 0)' >> $@/usr/bin/$(NAME)
 	@chmod +x $@/usr/bin/$(NAME)
 
 deb : release-build meta-version meta-license meta-url meta-description meta-vendor
