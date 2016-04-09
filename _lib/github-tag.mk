@@ -24,7 +24,7 @@ endif
 	    | jq -r '.[].name' | sort -V | tail -n 1 > $@
 
 meta-tag.json : meta-release-tag-name
-	curl -s $(GH_API)/repos/$(GH_USERNAME)/$(NAME)/tags \
+	@curl -s $(GH_API)/repos/$(GH_USERNAME)/$(NAME)/tags \
 	    | jq -r '.[] | select(.name == "$(shell cat $<)")' > $@
 
 meta-tarball-url : meta-tag.json
@@ -54,7 +54,7 @@ meta-license : release
 	@case $$(licensecheck -mr $< | grep -v UNKNOWN | grep -v GENERATED | sort -u | wc -l) in \
 	    0) echo "no licenses found!" 1>&2; exit 1 ;; \
 	    *) printf '%s' \
-	        "$$(licensecheck -mr $< | grep -v UNKNOWN | sort -u | cut -f 2)" \
+	        "$$(licensecheck -mr $< | grep -v UNKNOWN | grep -v GENERATED | sort -u | cut -f 2)" \
 	        | sed -z 's/\n/ and /g' > $@ ;; \
 	esac
 
