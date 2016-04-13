@@ -49,12 +49,16 @@ meta-url : meta-repo.json
 	@jq -r .homepage < $< > $@
 
 meta-license : release
-	@case $$(licensecheck -mr $< | grep -v UNKNOWN | sort -u | wc -l) in \
-	    0) echo "no licenses found!" 1>&2; exit 1 ;; \
-	    *) printf '%s' \
-	        "$$(licensecheck -mr $< | grep -v UNKNOWN | sort -u | cut -f 2)" \
-	        | sed -z 's/\n/ and /g' > $@ ;; \
-	esac
+	@if [ -f $</LICENSE ]; then \
+	    licensecheck -mr $</LICENSE | cut -f 2 > $@; \
+	else \
+	    case $$(licensecheck -mr $< | grep -v UNKNOWN | grep -v GENERATED | cut -f 2 | sort -u | wc -l) in \
+		0) echo "no licenses found!" 1>&2; exit 1 ;; \
+		*) printf '%s' \
+		    "$$(licensecheck -mr $< | grep -v UNKNOWN | grep -v GENERATED | cut -f 2 | sort -u)" \
+		    | sed -z 's/\n/ and /g' > $@ ;; \
+	    esac \
+	fi
 
 release.tar.gz : meta-tarball-url
 	@wget --quiet -O $@ $$(cat $<)
